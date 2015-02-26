@@ -1,1 +1,2 @@
-require "./slack/*"
+require "json"
+require "./slack/**"
