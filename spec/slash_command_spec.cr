@@ -1,5 +1,4 @@
-require "spec"
-require "../src/slack"
+require "./spec_helper"
 
 describe Slack::SlashCommand do
   it "creates from HTTP::Request" do
