@@ -10,6 +10,7 @@ class Slack::API::User
     is_primary_owner: {type: Bool, nilable: true},
     is_restricted: {type: Bool, nilable: true},
     is_ultra_restricted: {type: Bool, nilable: true},
+    has_2fa: {type: Bool, nilable: true},
     has_files: {type: Bool, nilable: true},
   })
 
