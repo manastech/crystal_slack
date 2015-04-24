@@ -42,4 +42,42 @@ describe Slack::API do
       JSON.parse(user.to_json).should eq(JSON.parse(json))
     end
   end
+
+  it "gets channels" do
+    WebMock.wrap do
+      api = Slack::API.new "some_token"
+
+      json = %({
+                  "id": "C024BE91L",
+                  "name": "fun",
+                  "created": 1360782804,
+                  "creator": "U024BE7LH",
+                  "is_archived": false,
+                  "is_member": false,
+                  "num_members": 6,
+                  "topic": {
+                      "value": "Fun times",
+                      "creator": "U024BE7LV",
+                      "last_set": 1369677212
+                  },
+                  "purpose": {
+                      "value": "This channel is for fun",
+                      "creator": "U024BE7LH",
+                      "last_set": 1360782804
+                  }
+              })
+
+      WebMock.stub(:get, "slack.com/api/channels.list?token=some_token").
+        to_return(body: %({
+            "ok": true,
+            "channels": [#{json}]
+          }))
+
+      channels = api.channels
+      channels.length.should eq(1)
+
+      channel = channels[0]
+      JSON.parse(channel.to_json).should eq(JSON.parse(json))
+    end
+  end
 end

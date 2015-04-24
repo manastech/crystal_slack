@@ -7,6 +7,10 @@ class Slack::API
     get_json "/api/users.list", "members", Array(User)
   end
 
+  def channels
+    get_json "/api/channels.list", "channels", Array(Channel)
+  end
+
   private def get_json(url, field, klass)
     response = @client.get "#{url}?token=#{@token}"
     handle(response) do
