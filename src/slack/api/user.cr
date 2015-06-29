@@ -19,7 +19,7 @@ class Slack::API::User
       first_name: {type: String, nilable: true},
       last_name: {type: String, nilable: true},
       real_name: String,
-      email: String,
+      email: {type: String, nilable: true},
       skype: {type: String, nilable: true},
       phone: {type: String, nilable: true},
       image_24: {type: String, nilable: true},
