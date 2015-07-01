@@ -1,5 +1,7 @@
 # crystal_slack
 
+[![Build Status](https://travis-ci.org/manastech/crystal_slack.svg?branch=master)](https://travis-ci.org/manastech/crystal_slack)
+
 Access [Slack API's](https://api.slack.com/) using [Crystal](http://crystal-lang.org).
 
 ## Projectfile
