@@ -35,7 +35,7 @@ describe Slack::API do
         }))
 
     users = api.users
-    users.length.should eq(1)
+    users.size.should eq(1)
 
     user = users[0]
     JSON.parse(user.to_json).should eq(JSON.parse(json))
@@ -71,7 +71,7 @@ describe Slack::API do
         }))
 
     channels = api.channels
-    channels.length.should eq(1)
+    channels.size.should eq(1)
 
     channel = channels[0]
     JSON.parse(channel.to_json).should eq(JSON.parse(json))
