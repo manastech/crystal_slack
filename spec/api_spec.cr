@@ -28,8 +28,8 @@ describe Slack::API do
                 "has_files": true
             })
 
-    WebMock.stub(:get, "slack.com/api/users.list?token=some_token").
-      to_return(body: %({
+    WebMock.stub(:get, "slack.com/api/users.list?token=some_token")
+           .to_return(body: %({
           "ok": true,
           "members": [#{json}]
         }))
@@ -64,8 +64,8 @@ describe Slack::API do
                 }
             })
 
-    WebMock.stub(:get, "slack.com/api/channels.list?token=some_token").
-      to_return(body: %({
+    WebMock.stub(:get, "slack.com/api/channels.list?token=some_token")
+           .to_return(body: %({
           "ok": true,
           "channels": [#{json}]
         }))

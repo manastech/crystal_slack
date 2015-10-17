@@ -1,4 +1,3 @@
-require "cgi"
 require "http/request"
 
 class Slack::SlashCommand
@@ -16,17 +15,17 @@ class Slack::SlashCommand
   end
 
   def self.from_request_body(body)
-    hash = CGI.parse(body)
+    params = HTTP::Params.parse(body)
     SlashCommand.new(
-      hash["token"].first,
-      hash["team_id"].first,
-      hash["channel_id"].first,
-      hash["channel_name"].first,
-      hash["user_id"].first,
-      hash["user_name"].first,
-      hash["command"].first,
-      hash["text"].first,
-      )
+      params["token"],
+      params["team_id"],
+      params["channel_id"],
+      params["channel_name"],
+      params["user_id"],
+      params["user_name"],
+      params["command"],
+      params["text"],
+    )
   end
 
   def initialize(@token, @team_id, @channel_id, @channel_name, @user_id, @user_name, @command, @text)
