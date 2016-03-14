@@ -7,4 +7,4 @@ authors:
 development_dependencies:
   webmock:
     github: manastech/webmock.cr
-    version: "~> 0.5.0"
+    commit: 51f9684c44a2be5570e24ca2f307d873baf44d51
