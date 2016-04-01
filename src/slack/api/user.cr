@@ -14,6 +14,9 @@ class Slack::API::User
     has_files:           {type: Bool, nilable: true},
   })
 
+  def initialize(@id, @name, @deleted, @profile)
+  end
+
   class Profile
     JSON.mapping({
       first_name: {type: String, nilable: true},
@@ -28,5 +31,8 @@ class Slack::API::User
       image_72:   {type: String, nilable: true},
       image_192:  {type: String, nilable: true},
     })
+
+    def initialize(@real_name, @email = nil)
+    end
   end
 end
