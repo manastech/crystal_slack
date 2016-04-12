@@ -28,6 +28,8 @@ class Slack::SlashCommand
     )
   end
 
-  def initialize(@token, @team_id, @channel_id, @channel_name, @user_id, @user_name, @command, @text)
+  def initialize(@token : String, @team_id : String, @channel_id : String,
+                 @channel_name : String, @user_id : String, @user_name : String,
+                 @command : String, @text : String)
   end
 end
