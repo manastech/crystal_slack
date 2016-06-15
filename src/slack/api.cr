@@ -1,6 +1,6 @@
 class Slack::API
   def initialize(@token : String)
-    @client = HTTP::Client.new "slack.com", ssl: true
+    @client = HTTP::Client.new "slack.com", tls: true
   end
 
   def users
