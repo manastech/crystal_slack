@@ -11,6 +11,10 @@ class Slack::API
     get_json "/api/channels.list", "channels", Array(Channel)
   end
 
+  def post_message(channel, text)
+    post "/api/chat.postMessage", channel: channel, text: text
+  end
+
   private def get_json(url, field, klass)
     response = @client.get "#{url}?token=#{@token}"
     handle(response) do
@@ -36,6 +40,19 @@ class Slack::API
     end
 
     raise Error.new(error.not_nil!)
+  end
+
+  private def post(url, **params)
+    params = HTTP::Params.build do |form|
+      form.add "token", @token
+
+      params.each do |k, v|
+        form.add k.to_s, v
+      end
+    end
+
+    response = @client.post "#{url}?#{params}"
+    handle(response) { }
   end
 
   private def handle(response)

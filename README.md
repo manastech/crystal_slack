@@ -33,7 +33,7 @@ hook = Slack::IncomingWebHook.new("some_text", channel: "some_channel")
 hook.send_to "https://hooks.slack.com/services/..."
 ```
 
-You can also get the users and channels given an token.
+You can also get the users and channels given an token, and send messages to a channel or user.
 
 ## Todo
 
