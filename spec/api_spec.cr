@@ -76,4 +76,40 @@ describe Slack::API do
     channel = channels[0]
     JSON.parse(channel.to_json).should eq(JSON.parse(json))
   end
+
+  it "posts to a channel" do
+    api = Slack::API.new "some_token"
+
+    json = %({
+      "ok": true,
+      "channel": "C1PJMB3MI",
+      "ts": "1468419247.000010",
+      "message": {
+        "text": "something important",
+        "username": "the bot",
+        "bot_id": "B1R4VQ5RU",
+        "type": "message",
+        "subtype": "bot_message",
+        "ts": "1468419247.000010"
+      }
+    })
+
+    stub = WebMock.stub(:post, "slack.com/api/chat.postMessage?token=some_token&channel=%23general&text=something%20important")
+                  .to_return(body: json)
+
+    api.post_message("#general", "something important")
+
+    stub.calls.should eq(1)
+  end
+
+  it "raises if posting to a channel failed" do
+    api = Slack::API.new "some_token"
+
+    stub = WebMock.stub(:post, "slack.com/api/chat.postMessage?token=some_token&channel=%23general&text=something%20important")
+                  .to_return(status: 400)
+
+    expect_raises(Slack::API::Error) { api.post_message("#general", "something important") }
+
+    stub.calls.should eq(1)
+  end
 end
