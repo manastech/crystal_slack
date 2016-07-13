@@ -3,7 +3,7 @@ require "./spec_helper"
 describe Slack::SlashCommand do
   it "creates from HTTP::Request" do
     request = HTTP::Request.new "POST", "/",
-                                body: "token=some_token&team_id=0&channel_id=1&channel_name=some_channel&user_id=2&user_name=some_user&command=cmd&text=txt"
+      body: "token=some_token&team_id=0&channel_id=1&channel_name=some_channel&user_id=2&user_name=some_user&command=cmd&text=txt"
 
     command = Slack::SlashCommand.from_request(request)
     command.token.should eq("some_token")

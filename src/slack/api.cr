@@ -46,13 +46,13 @@ class Slack::API
     params = HTTP::Params.build do |form|
       form.add "token", @token
 
-      params.each do |k,v|
+      params.each do |k, v|
         form.add k.to_s, v
       end
     end
 
     response = @client.post "#{url}?#{params}"
-    handle(response) {}
+    handle(response) { }
   end
 
   private def handle(response)
