@@ -24,16 +24,23 @@ command = Slack::SlashCommand.from_request(request)
 puts command.text
 ```
 
-You can create an incoming web hook and send it:
+You can create a message and send it using either webhooks or the `chat.postMessage` API:
 
 ```crystal
 require "slack"
 
-hook = Slack::IncomingWebHook.new("some_text", channel: "some_channel")
-hook.send_to "https://hooks.slack.com/services/..."
+message = Slack::Message("some_text", channel: "some_channel")
+
+# send to webhook
+message.send_to_hook "https://hooks.slack.com/services/..."
+
+# send using the chat.postMessage API
+api = Slack::API.new "some_token"
+api.post_message(message)
 ```
 
-You can also get the users and channels given an token, and send messages to a channel or user.
+More complex messages are supported. Please check the Message class.
+You can also get the users and channels given an token.
 
 ## Todo
 

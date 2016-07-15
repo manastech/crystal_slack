@@ -94,10 +94,10 @@ describe Slack::API do
       }
     })
 
-    stub = WebMock.stub(:post, "slack.com/api/chat.postMessage?token=some_token&channel=%23general&text=something%20important")
+    stub = WebMock.stub(:post, "slack.com/api/chat.postMessage?token=some_token&text=something+important&channel=general")
                   .to_return(body: json)
 
-    api.post_message("#general", "something important")
+     api.post_message(text: "something important", channel: "general")
 
     stub.calls.should eq(1)
   end
@@ -105,10 +105,11 @@ describe Slack::API do
   it "raises if posting to a channel failed" do
     api = Slack::API.new "some_token"
 
-    stub = WebMock.stub(:post, "slack.com/api/chat.postMessage?token=some_token&channel=%23general&text=something%20important")
-                  .to_return(status: 400)
+    stub = WebMock.stub(:post, "slack.com/api/chat.postMessage?token=some_token&text=something+important&channel=general").to_return(status: 400)
 
-    expect_raises(Slack::API::Error) { api.post_message("#general", "something important") }
+    expect_raises(Slack::API::Error) do
+       api.post_message(text: "something important", channel: "general")
+    end
 
     stub.calls.should eq(1)
   end
