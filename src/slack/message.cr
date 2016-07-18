@@ -8,9 +8,10 @@ class Slack::Message
     icon_url:      {type: String, nilable: true},
     username:      {type: String, nilable: true},
     attachments:   {type: Array(JSON::Any), nilable: true},
+    response_type: {type: String, nilable: true},
   })
 
-  def initialize(@text : String, @channel = nil, @icon_emoji = nil, @icon_url = nil, @username = nil, @attachments = nil)
+  def initialize(@text : String, @channel = nil, @icon_emoji = nil, @icon_url = nil, @username = nil, @attachments = nil, @response_type = nil)
   end
 
   def token=(token)
@@ -26,11 +27,12 @@ class Slack::Message
   end
 
   def add_params(form)
-    form.add "text",        text
-    form.add "channel",     channel             if channel
-    form.add "icon_emoji",  icon_emoji          if icon_emoji
-    form.add "icon_url",    icon_url            if icon_url
-    form.add "username",    username            if username
-    form.add "attachments", attachments.to_json if attachments && !attachments.not_nil!.empty?
+    form.add "text",           text
+    form.add "channel",        channel             if channel
+    form.add "icon_emoji",     icon_emoji          if icon_emoji
+    form.add "icon_url",       icon_url            if icon_url
+    form.add "username",       username            if username
+    form.add "response_type",  response_type       if response_type
+    form.add "attachments",    attachments.to_json if attachments && !attachments.not_nil!.empty?
   end
 end
