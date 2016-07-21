@@ -16,25 +16,32 @@ class Slack::API
   end
 
   def post_message(message : Message)
-    # the post message API doesn't support json paylods
-    # we send each field as a separate URL param
     params = HTTP::Params.build do |form|
       form.add "token", @token
       message.add_params(form)
     end
 
-    response = @client.post "/api/chat.postMessage?#{params}"
-    handle(response) { }
+    post_json "/api/chat.postMessage?#{params}"
+  end
+
+  def update_message(message : Message, timestamp : String)
+    params = HTTP::Params.build do |form|
+      form.add "token", @token
+      form.add "ts", timestamp
+      message.add_params(form)
+    end
+
+    post_json "/api/chat.update?#{params}"
   end
 
   private def get_json(url, field, klass)
     response = @client.get "#{url}?token=#{@token}"
     handle(response) do
-      parse_response response.body, field, klass
+      parse_response_object response.body, field, klass
     end
   end
 
-  private def parse_response(body, field, klass)
+  private def parse_response_object(body, field, klass)
     error = nil
 
     pull = JSON::PullParser.new(body)
@@ -54,6 +61,43 @@ class Slack::API
     raise Error.new(error.not_nil!)
   end
 
+  private def post_json(url)
+    # the post message API doesn't support json paylods
+    # we send each field as a separate URL param
+    response = @client.post url
+    handle(response) do
+      parse_post_response(response.body)
+    end
+  end
+
+  private def parse_post_response(body)
+    error = nil
+    ts = nil
+    channel = nil
+
+    pull = JSON::PullParser.new(body)
+    pull.read_object do |key|
+      case key
+      when "ok"
+        pull.read_bool
+      when "error"
+        error = pull.read_string
+      when "ts"
+        ts = pull.read_string
+      when "channel"
+        channel = pull.read_string
+      else
+        pull.skip
+      end
+    end
+
+    if ts && channel
+      { timestamp: ts.not_nil!, channel: channel.not_nil! }
+    else
+      raise Error.new(error.not_nil!)
+    end
+  end
+
   private def handle(response)
     case response.status_code
     when 200, 201
@@ -63,4 +107,3 @@ class Slack::API
     end
   end
 end
-
