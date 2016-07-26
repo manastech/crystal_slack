@@ -6,7 +6,7 @@ class Slack::API::Channel
     creator:     String,
     is_archived: Bool,
     is_member:   Bool,
-    num_members: Int32,
+    num_members: {type: Int32, nilable: true},
     topic:       Topic,
     purpose:     Topic,
   })

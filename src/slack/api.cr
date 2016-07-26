@@ -11,6 +11,10 @@ class Slack::API
     get_json "/api/channels.list", "channels", Array(Channel)
   end
 
+  def channel_info(channel_id)
+    get_json "/api/channels.info", "channel", Channel, { "channel" => channel_id }
+  end
+
   def post_message(text : String, channel : String)
     post_message(Message.new(text: text, channel: channel))
   end
@@ -25,17 +29,24 @@ class Slack::API
   end
 
   def update_message(message : Message, timestamp : String)
-    params = HTTP::Params.build do |form|
+    encoded_params = HTTP::Params.build do |form|
       form.add "token", @token
       form.add "ts", timestamp
       message.add_params(form)
     end
 
-    post_json "/api/chat.update?#{params}"
+    post_json "/api/chat.update?#{encoded_params}"
   end
 
-  private def get_json(url, field, klass)
-    response = @client.get "#{url}?token=#{@token}"
+  private def get_json(url, field, klass, params = {} of String => String)
+    encoded_params = HTTP::Params.build do |form|
+      form.add "token", @token
+      params.each do |(k,v)|
+        form.add k, v
+      end
+    end
+
+    response = @client.get "#{url}?#{encoded_params}"
     handle(response) do
       parse_response_object response.body, field, klass
     end
