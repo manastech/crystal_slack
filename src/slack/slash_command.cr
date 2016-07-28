@@ -9,6 +9,7 @@ class Slack::SlashCommand
   getter user_name
   getter command
   getter text
+  getter response_url
 
   def self.from_request(request : HTTP::Request)
     from_request_body request.body.not_nil!
@@ -25,11 +26,12 @@ class Slack::SlashCommand
       params["user_name"],
       params["command"],
       params["text"],
+      params["response_url"],
     )
   end
 
   def initialize(@token : String, @team_id : String, @channel_id : String,
                  @channel_name : String, @user_id : String, @user_name : String,
-                 @command : String, @text : String)
+                 @command : String, @text : String, @response_url : String)
   end
 end
