@@ -15,7 +15,11 @@ class Slack::SlashCommand
     from_request_body request.body.not_nil!
   end
 
-  def self.from_request_body(body)
+  def self.from_request_body(body : IO)
+    from_request_body body.gets_to_end
+  end
+
+  def self.from_request_body(body : String)
     params = HTTP::Params.parse(body)
     SlashCommand.new(
       params["token"],

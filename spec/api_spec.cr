@@ -28,7 +28,7 @@ describe Slack::API do
                 "has_files": true
             })
 
-    WebMock.stub(:get, "slack.com/api/users.list?token=some_token")
+    WebMock.stub(:get, "https://slack.com/api/users.list?token=some_token")
            .to_return(body: %({
           "ok": true,
           "members": [#{json}]
@@ -64,7 +64,7 @@ describe Slack::API do
                 }
             })
 
-    WebMock.stub(:get, "slack.com/api/channels.list?token=some_token")
+    WebMock.stub(:get, "https://slack.com/api/channels.list?token=some_token")
            .to_return(body: %({
           "ok": true,
           "channels": [#{json}]
@@ -99,8 +99,8 @@ describe Slack::API do
                 }
             })
 
-    WebMock.stub(:get, "slack.com/api/channels.info?token=some_token&channel=C1RDH5HPE")
-      .to_return(body: %({
+    WebMock.stub(:get, "https://slack.com/api/channels.info?token=some_token&channel=C1RDH5HPE")
+           .to_return(body: %({
           "ok": true,
           "channel": #{json}
         }))
@@ -109,7 +109,6 @@ describe Slack::API do
 
     JSON.parse(channel.to_json).should eq(JSON.parse(json))
   end
-
 
   it "posts to a channel" do
     api = Slack::API.new "some_token"
@@ -128,10 +127,10 @@ describe Slack::API do
       }
     })
 
-    stub = WebMock.stub(:post, "slack.com/api/chat.postMessage?token=some_token&text=something+important&channel=general")
+    stub = WebMock.stub(:post, "https://slack.com/api/chat.postMessage?token=some_token&text=something+important&channel=general")
                   .to_return(body: json)
 
-     api.post_message(text: "something important", channel: "general")
+    api.post_message(text: "something important", channel: "general")
 
     stub.calls.should eq(1)
   end
@@ -139,10 +138,10 @@ describe Slack::API do
   it "raises if posting to a channel failed" do
     api = Slack::API.new "some_token"
 
-    stub = WebMock.stub(:post, "slack.com/api/chat.postMessage?token=some_token&text=something+important&channel=general").to_return(status: 400)
+    stub = WebMock.stub(:post, "https://slack.com/api/chat.postMessage?token=some_token&text=something+important&channel=general").to_return(status: 400)
 
     expect_raises(Slack::API::Error) do
-       api.post_message(text: "something important", channel: "general")
+      api.post_message(text: "something important", channel: "general")
     end
 
     stub.calls.should eq(1)
