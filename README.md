@@ -4,13 +4,17 @@
 
 Access [Slack API's](https://api.slack.com/) using [Crystal](http://crystal-lang.org).
 
-## Projectfile
+## Installation
 
 ```crystal
-deps do
-  github "manastech/crystal_slack"
-end
+# shard.yml
+dependencies:
+  crystal_slack:
+    github: manastech/crystal_slack
+    branch: master
 ```
+
+Run `shards install` afterwards.
 
 ## Usage
 
