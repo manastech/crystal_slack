@@ -21,7 +21,7 @@ class Slack::Message
   end
 
   def send_to_hook(url)
-    HTTP::Client.post_form url, "payload=#{URI.escape to_json}"
+    HTTP::Client.post(url, form: "payload=#{URI.escape to_json}")
   end
 
   def post_with_api(api)
