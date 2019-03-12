@@ -12,6 +12,13 @@ deps do
 end
 ```
 
+## Shards
+
+```yaml
+slack:
+  github: "manastech/crystal_slack"
+```
+
 ## Usage
 
 You can get a Slack::SlashCommand from an HTTP::Request or its body:
@@ -29,7 +36,7 @@ You can create a message and send it using either webhooks or the `chat.postMess
 ```crystal
 require "slack"
 
-message = Slack::Message("some_text", channel: "some_channel")
+message = Slack::Message.new("some_text", channel: "some_channel")
 
 # send to webhook
 message.send_to_hook "https://hooks.slack.com/services/..."
