@@ -35,6 +35,7 @@ class Slack::Message
     form.add "icon_emoji",     icon_emoji          if icon_emoji
     form.add "icon_url",       icon_url            if icon_url
     form.add "username",       username            if username
+    form.add "as_user",        as_user             if as_user
     form.add "attachments",    attachments.to_json if attachments
 
     form.add "response_type",  response_type       if response_type
