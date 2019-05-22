@@ -7,13 +7,14 @@ class Slack::Message
     icon_emoji:    {type: String, nilable: true},
     icon_url:      {type: String, nilable: true},
     username:      {type: String, nilable: true},
+    as_user:       {type: Bool, nilable: false},
     attachments:   {type: Array(JSON::Any), nilable: true},
     response_type: {type: String, nilable: true},
     delete_original:  {type: Bool, nilable: true},
     replace_original: {type: Bool, nilable: true},
   })
 
-  def initialize(@text : String, @channel = nil, @icon_emoji = nil, @icon_url = nil, @username = nil, @attachments = nil, @response_type = nil, @delete_original = nil, @replace_original = nil)
+  def initialize(@text : String, @channel = nil, @icon_emoji = nil, @icon_url = nil, @username = nil, @attachments = nil, @response_type = nil, @delete_original = nil, @replace_original = nil, @as_user = false)
   end
 
   def token=(token)
