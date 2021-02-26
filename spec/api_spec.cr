@@ -118,33 +118,74 @@ describe Slack::API do
     api = Slack::API.new "some_token"
 
     json = %({
-                "id": "C1RDH5HPE",
-                "name": "fun",
-                "created": 1360782804,
-                "creator": "U024BE7LH",
-                "is_archived": false,
-                "is_member": false,
-                "topic": {
-                    "value": "Fun times",
-                    "creator": "U024BE7LV",
-                    "last_set": 1369677212
-                },
-                "purpose": {
-                    "value": "This channel is for fun",
-                    "creator": "U024BE7LH",
-                    "last_set": 1360782804
-                }
-            })
+      "id": "C012AB3CD",
+      "name": "general",
+      "is_channel": true,
+      "is_group": false,
+      "is_im": false,
+      "created": 1449252889,
+      "creator": "W012A3BCD",
+      "is_archived": false,
+      "is_general": true,
+      "unlinked": 0,
+      "name_normalized": "general",
+      "is_read_only": false,
+      "is_shared": false,
+      "parent_conversation": null,
+      "is_ext_shared": false,
+      "is_org_shared": false,
+      "pending_shared": [],
+      "is_pending_ext_shared": false,
+      "is_member": true,
+      "is_private": false,
+      "is_mpim": false,
+      "last_read": "1502126650.228446",
+      "topic": {
+          "value": "For public discussion of generalities",
+          "creator": "W012A3BCD",
+          "last_set": 1449709364
+      },
+      "purpose": {
+          "value": "This part of the workspace is for fun. Make fun here.",
+          "creator": "W012A3BCD",
+          "last_set": 1449709364
+      },
+      "previous_names": [
+          "specifics",
+          "abstractions",
+          "etc"
+      ],
+      "locale": "en-US"
+    })
 
-    WebMock.stub(:get, "https://slack.com/api/channels.info?token=some_token&channel=C1RDH5HPE")
+    relevant_fields_json = %({
+      "id": "C012AB3CD",
+      "name": "general",
+      "created": 1449252889,
+      "creator": "W012A3BCD",
+      "is_archived": false,
+      "is_member": true,
+      "topic": {
+          "value": "For public discussion of generalities",
+          "creator": "W012A3BCD",
+          "last_set": 1449709364
+      },
+      "purpose": {
+          "value": "This part of the workspace is for fun. Make fun here.",
+          "creator": "W012A3BCD",
+          "last_set": 1449709364
+      }
+    })
+
+    WebMock.stub(:get, "https://slack.com/api/conversations.info?token=some_token&channel=C012AB3CD")
            .to_return(body: %({
           "ok": true,
           "channel": #{json}
         }))
 
-    channel = api.channel_info("C1RDH5HPE")
+    channel = api.channel_info("C012AB3CD")
 
-    JSON.parse(channel.to_json).should eq(JSON.parse(json))
+    JSON.parse(channel.to_json).should eq(JSON.parse(relevant_fields_json))
   end
 
   it "posts to a channel" do
