@@ -45,36 +45,73 @@ describe Slack::API do
     api = Slack::API.new "some_token"
 
     json = %({
-                "id": "C024BE91L",
-                "name": "fun",
-                "created": 1360782804,
-                "creator": "U024BE7LH",
-                "is_archived": false,
-                "is_member": false,
-                "num_members": 6,
-                "topic": {
-                    "value": "Fun times",
-                    "creator": "U024BE7LV",
-                    "last_set": 1369677212
-                },
-                "purpose": {
-                    "value": "This channel is for fun",
-                    "creator": "U024BE7LH",
-                    "last_set": 1360782804
-                }
-            })
+      "id": "C012AB3CD",
+      "name": "general",
+      "is_channel": true,
+      "is_group": false,
+      "is_im": false,
+      "created": 1449252889,
+      "creator": "U012A3CDE",
+      "is_archived": false,
+      "is_general": true,
+      "unlinked": 0,
+      "name_normalized": "general",
+      "is_shared": false,
+      "is_ext_shared": false,
+      "is_org_shared": false,
+      "pending_shared": [],
+      "is_pending_ext_shared": false,
+      "is_member": true,
+      "is_private": false,
+      "is_mpim": false,
+      "topic": {
+          "value": "Company-wide announcements and work-based matters",
+          "creator": "",
+          "last_set": 0
+      },
+      "purpose": {
+          "value": "This channel is for team-wide communication and announcements. All team members are in this channel.",
+          "creator": "",
+          "last_set": 0
+      },
+      "previous_names": [],
+      "num_members": 4
+    })
 
-    WebMock.stub(:get, "https://slack.com/api/channels.list?token=some_token")
+    relevant_fields_json = %({
+      "id": "C012AB3CD",
+      "name": "general",
+      "created": 1449252889,
+      "creator": "U012A3CDE",
+      "is_archived": false,
+      "is_member": true,
+      "num_members": 4,
+      "topic": {
+          "value": "Company-wide announcements and work-based matters",
+          "creator": "",
+          "last_set": 0
+      },
+      "purpose": {
+          "value": "This channel is for team-wide communication and announcements. All team members are in this channel.",
+          "creator": "",
+          "last_set": 0
+      }
+    })
+
+    WebMock.stub(:get, "https://slack.com/api/conversations.list?token=some_token")
            .to_return(body: %({
           "ok": true,
-          "channels": [#{json}]
+          "channels": [#{json}],
+          "response_metadata": {
+            "next_cursor": "dGVhbTpDMDYxRkE1UEI="
+          }
         }))
 
     channels = api.channels
     channels.size.should eq(1)
 
     channel = channels[0]
-    JSON.parse(channel.to_json).should eq(JSON.parse(json))
+    JSON.parse(channel.to_json).should eq(JSON.parse(relevant_fields_json))
   end
 
   it "gets a channel's details" do
