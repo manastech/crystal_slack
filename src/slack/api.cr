@@ -8,11 +8,11 @@ class Slack::API
   end
 
   def channels
-    get_json "/api/channels.list", "channels", Array(Channel)
+    get_json "/api/conversations.list", "channels", Array(Channel)
   end
 
   def channel_info(channel_id)
-    get_json "/api/channels.info", "channel", Channel, { "channel" => channel_id }
+    get_json "/api/conversations.info", "channel", Channel, { "channel" => channel_id }
   end
 
   def post_message(text : String, channel : String)
