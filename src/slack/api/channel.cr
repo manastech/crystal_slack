@@ -1,21 +1,21 @@
 class Slack::API::Channel
-  JSON.mapping({
-    id:          String,
-    name:        String,
-    created:     Int64,
-    creator:     String,
-    is_archived: Bool,
-    is_member:   Bool,
-    num_members: {type: Int32, nilable: true},
-    topic:       Topic,
-    purpose:     Topic,
-  })
+  include JSON::Serializable
+
+  property id : String
+  property name : String
+  property created : Int64
+  property creator : String
+  property is_archived : Bool
+  property is_member : Bool
+  property num_members : Int32?
+  property topic : Topic
+  property purpose : Topic
 
   struct Topic
-    JSON.mapping({
-      value:    String,
-      creator:  String,
-      last_set: Int64,
-    })
+    include JSON::Serializable
+
+    property value : String
+    property creator : String
+    property last_set : Int64
   end
 end
