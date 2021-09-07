@@ -29,7 +29,7 @@ describe Slack::API do
             })
 
     WebMock.stub(:get, "https://slack.com/api/users.list?token=some_token")
-           .to_return(body: %({
+      .to_return(body: %({
           "ok": true,
           "members": [#{json}]
         }))
@@ -99,7 +99,7 @@ describe Slack::API do
     })
 
     WebMock.stub(:get, "https://slack.com/api/conversations.list?token=some_token")
-           .to_return(body: %({
+      .to_return(body: %({
           "ok": true,
           "channels": [#{json}],
           "response_metadata": {
@@ -178,7 +178,7 @@ describe Slack::API do
     })
 
     WebMock.stub(:get, "https://slack.com/api/conversations.info?token=some_token&channel=C012AB3CD")
-           .to_return(body: %({
+      .to_return(body: %({
           "ok": true,
           "channel": #{json}
         }))
@@ -206,7 +206,7 @@ describe Slack::API do
     })
 
     stub = WebMock.stub(:post, "https://slack.com/api/chat.postMessage?token=some_token&text=something+important&channel=general")
-                  .to_return(body: json)
+      .to_return(body: json)
 
     api.post_message(text: "something important", channel: "general")
 

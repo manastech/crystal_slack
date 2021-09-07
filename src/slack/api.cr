@@ -12,7 +12,7 @@ class Slack::API
   end
 
   def channel_info(channel_id)
-    get_json "/api/conversations.info", "channel", Channel, { "channel" => channel_id }
+    get_json "/api/conversations.info", "channel", Channel, {"channel" => channel_id}
   end
 
   def post_message(text : String, channel : String)
@@ -41,7 +41,7 @@ class Slack::API
   private def get_json(url, field, klass, params = {} of String => String)
     encoded_params = HTTP::Params.build do |form|
       form.add "token", @token
-      params.each do |(k,v)|
+      params.each do |(k, v)|
         form.add k, v
       end
     end
@@ -103,7 +103,7 @@ class Slack::API
     end
 
     if ts && channel
-      { timestamp: ts.not_nil!, channel: channel.not_nil! }
+      {timestamp: ts.not_nil!, channel: channel.not_nil!}
     else
       raise Error.new(error.not_nil!)
     end
