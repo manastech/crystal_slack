@@ -1,0 +1,12 @@
+{
+    "type": "event_callback",
+    "event": {
+        "type": "app_uninstalled",
+        "event_ts": "1644719975.363095"
+    },
+    "token": "E6FV7uzAaZoqjhbU56ZKNnIk",
+    "team_id": "T017GL5AV5E",
+    "event_id": "Ev032S3QLEJZ",
+    "api_app_id": "A031L6N0Q3G",
+    "event_time": 1644719975
+}

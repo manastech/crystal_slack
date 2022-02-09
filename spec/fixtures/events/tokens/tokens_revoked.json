@@ -1,0 +1,18 @@
+{
+    "type": "event_callback",
+    "event": {
+        "type": "tokens_revoked",
+        "tokens": {
+            "bot": [],
+            "oauth": [
+                "U016SQZLFEE"
+            ]
+        },
+        "event_ts": "1644719975.369565"
+    },
+    "token": "E6FV7uzAaZoqjhbU56ZKNnIk",
+    "team_id": "T017GL5AV5E",
+    "event_id": "Ev033JP0TZ8Q",
+    "api_app_id": "A031L6N0Q3G",
+    "event_time": 1644719975
+}

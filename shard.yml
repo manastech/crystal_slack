@@ -6,6 +6,10 @@ authors:
 
 crystal: ">= 0.36.1"
 
+dependencies:
+  habitat:
+    git: https://github.com/luckyframework/habitat.git
+    version: ~> 0.4.7
 development_dependencies:
   webmock:
     github: manastech/webmock.cr

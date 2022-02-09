@@ -1,0 +1,71 @@
+{
+    "type": "event_callback",
+    "event": {
+        "ts": "1644729608.000600",
+        "type": "message",
+        "hidden": true,
+        "channel": "C016U8H75V1",
+        "subtype": "message_deleted",
+        "event_ts": "1644729608.000600",
+        "deleted_ts": "1644721243.569179",
+        "channel_type": "channel",
+        "previous_message": {
+            "ts": "1644721243.569179",
+            "team": "T017GL5AV5E",
+            "text": "<https://www.infoq.com/articles/crystal-ruby-c-compiled-typed/>",
+            "type": "message",
+            "user": "U016SQZLFEE",
+            "blocks": [
+                {
+                    "type": "rich_text",
+                    "block_id": "=uKEU",
+                    "elements": [
+                        {
+                            "type": "rich_text_section",
+                            "elements": [
+                                {
+                                    "url": "https://www.infoq.com/articles/crystal-ruby-c-compiled-typed/",
+                                    "type": "link"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "attachments": [
+                {
+                    "id": 1,
+                    "text": "The Crystal language is ready for production, 12 years after inception. Crystal is compiled for performance, typed for safety, and Ruby-like for productivity. Due to the strong type inference, developers need only sparse type annotations. We interviewed the head of the Crystal team on the language tradeoffs, the present features and the language roadmap.",
+                    "title": "Compiled, Typed, Ruby-Inspired Crystal Language is Ready for Production - Q&amp;A with Beta Ziliani",
+                    "fallback": "InfoQ: Compiled, Typed, Ruby-Inspired Crystal Language is Ready for Production - Q&amp;A with Beta Ziliani",
+                    "from_url": "https://www.infoq.com/articles/crystal-ruby-c-compiled-typed/",
+                    "image_url": "https://res.infoq.com/articles/crystal-ruby-c-compiled-typed/en/headerimage/crystal-ready-for-production-header-1619680232611.jpg",
+                    "title_link": "https://www.infoq.com/articles/crystal-ruby-c-compiled-typed/",
+                    "image_bytes": 997359,
+                    "image_width": 476,
+                    "image_height": 250,
+                    "original_url": "https://www.infoq.com/articles/crystal-ruby-c-compiled-typed/",
+                    "service_icon": "https://cdn.infoq.com/statics_s2_20220201-0240/apple-touch-icon.png",
+                    "service_name": "InfoQ"
+                }
+            ],
+            "client_msg_id": "14dde592-f0cc-411b-b077-dacbd0c98c27"
+        }
+    },
+    "token": "E6FV7uzAaZoqjhbU56ZKNnIk",
+    "team_id": "T017GL5AV5E",
+    "event_id": "Ev033JSGVASU",
+    "api_app_id": "A031L6N0Q3G",
+    "event_time": 1644729608,
+    "event_context": "4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMDE3R0w1QVY1RSIsImFpZCI6IkEwMzFMNk4wUTNHIiwiY2lkIjoiQzAxNlU4SDc1VjEifQ",
+    "authorizations": [
+        {
+            "is_bot": true,
+            "team_id": "T017GL5AV5E",
+            "user_id": "U0325FAKTL1",
+            "enterprise_id": null,
+            "is_enterprise_install": false
+        }
+    ],
+    "is_ext_shared_channel": false
+}

@@ -1,0 +1,47 @@
+{
+    "token": "E6FV7uzAaZoqjhbU56ZKNnIk",
+    "team_id": "T017GL5AV5E",
+    "api_app_id": "A031L6N0Q3G",
+    "event": {
+        "client_msg_id": "ce4f4fe2-9cfa-4543-9183-e9896bfacbf0",
+        "type": "message",
+        "text": "<https://rubytocrystal.substack.com/p/the-short-road-to-lucky-with-crystal>",
+        "user": "U016SQZLFEE",
+        "ts": "1644527967.435749",
+        "team": "T017GL5AV5E",
+        "blocks": [
+            {
+                "type": "rich_text",
+                "block_id": "GZL",
+                "elements": [
+                    {
+                        "type": "rich_text_section",
+                        "elements": [
+                            {
+                                "type": "link",
+                                "url": "https://rubytocrystal.substack.com/p/the-short-road-to-lucky-with-crystal"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "channel": "C031L6M3YBG",
+        "event_ts": "1644527967.435749",
+        "channel_type": "channel"
+    },
+    "type": "event_callback",
+    "event_id": "Ev032EB466G6",
+    "event_time": 1644527967,
+    "authorizations": [
+        {
+            "enterprise_id": null,
+            "team_id": "T017GL5AV5E",
+            "user_id": "U016SQZLFEE",
+            "is_bot": false,
+            "is_enterprise_install": false
+        }
+    ],
+    "is_ext_shared_channel": false,
+    "event_context": "4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMDE3R0w1QVY1RSIsImFpZCI6IkEwMzFMNk4wUTNHIiwiY2lkIjoiQzAzMUw2TTNZQkcifQ"
+}

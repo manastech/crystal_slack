@@ -1,0 +1,30 @@
+{
+    "type": "event_callback",
+    "event": {
+        "ts": "1644720112.870539",
+        "text": "<@U0325FAKTL1> has joined the channel",
+        "type": "message",
+        "user": "U0325FAKTL1",
+        "channel": "C016U8H75V1",
+        "inviter": "U016SQZLFEE",
+        "subtype": "channel_join",
+        "event_ts": "1644720112.870539",
+        "channel_type": "channel"
+    },
+    "token": "E6FV7uzAaZoqjhbU56ZKNnIk",
+    "team_id": "T017GL5AV5E",
+    "event_id": "Ev032S3SDH9T",
+    "api_app_id": "A031L6N0Q3G",
+    "event_time": 1644720112,
+    "event_context": "4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMDE3R0w1QVY1RSIsImFpZCI6IkEwMzFMNk4wUTNHIiwiY2lkIjoiQzAxNlU4SDc1VjEifQ",
+    "authorizations": [
+        {
+            "is_bot": true,
+            "team_id": "T017GL5AV5E",
+            "user_id": "U0325FAKTL1",
+            "enterprise_id": null,
+            "is_enterprise_install": false
+        }
+    ],
+    "is_ext_shared_channel": false
+}

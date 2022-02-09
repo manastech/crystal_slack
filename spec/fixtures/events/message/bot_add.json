@@ -1,0 +1,31 @@
+{
+    "type": "event_callback",
+    "event": {
+        "ts": "1644720008.852359",
+        "text": "added an integration to this channel: <https://goalsurfer.slack.com/services/B032V1ABNF5|recollection>",
+        "type": "message",
+        "user": "U016SQZLFEE",
+        "bot_id": "B032V1ABNF5",
+        "channel": "C032TLM43GA",
+        "subtype": "bot_add",
+        "bot_link": "<https://goalsurfer.slack.com/services/B032V1ABNF5|recollection>",
+        "event_ts": "1644720008.852359",
+        "channel_type": "channel"
+    },
+    "token": "E6FV7uzAaZoqjhbU56ZKNnIk",
+    "team_id": "T017GL5AV5E",
+    "event_id": "Ev032NAXD8ES",
+    "api_app_id": "A031L6N0Q3G",
+    "event_time": 1644720008,
+    "event_context": "4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMDE3R0w1QVY1RSIsImFpZCI6IkEwMzFMNk4wUTNHIiwiY2lkIjoiQzAzMlRMTTQzR0EifQ",
+    "authorizations": [
+        {
+            "is_bot": false,
+            "team_id": "T017GL5AV5E",
+            "user_id": "U016SQZLFEE",
+            "enterprise_id": null,
+            "is_enterprise_install": false
+        }
+    ],
+    "is_ext_shared_channel": false
+}
