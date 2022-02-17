@@ -1,0 +1,25 @@
+{
+    "type": "event_callback",
+    "event": {
+        "tab": "home",
+        "type": "app_home_opened",
+        "user": "U016SQZLFEE",
+        "channel": "D031PUW2YG5",
+        "event_ts": "1645080351.095862"
+    },
+    "token": "E6FV7uzAaZoqjhbU56ZKNnIk",
+    "team_id": "T017GL5AV5E",
+    "event_id": "Ev033A0UPDP0",
+    "api_app_id": "A031L6N0Q3G",
+    "event_time": 1645080351,
+    "authorizations": [
+        {
+            "is_bot": true,
+            "team_id": "T017GL5AV5E",
+            "user_id": "U0325FAKTL1",
+            "enterprise_id": null,
+            "is_enterprise_install": false
+        }
+    ],
+    "is_ext_shared_channel": false
+}

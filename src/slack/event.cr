@@ -7,6 +7,7 @@ abstract class Slack::Event
   property type : String
 
   use_json_discriminator "type", {
+    app_home_opened:  Slack::Events::App::AppHomeOpened,
     app_uninstalled:  Slack::Events::App::AppUninstalled,
     message:          Slack::Events::Message,
     reaction_added:   Slack::Events::Reaction::ReactionAdded,

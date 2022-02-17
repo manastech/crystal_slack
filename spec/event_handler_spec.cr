@@ -136,6 +136,19 @@ describe Slack::Events::EventHandler do
       event = pp Slack::Events::EventHandler.new(request).event_payload
       puts "\n"
     end
+
+    it "should handle home_opened events" do
+      request = build_request("app", "app_home_opened")
+
+      event = Slack::Events::EventHandler
+        .new(request)
+        .event_payload
+        .event
+        .as(Slack::Events::App::AppHomeOpened)
+
+      event.tab.should eq "home"
+      event.type.should eq "app_home_opened"
+    end
   end
 
   context "token events" do
