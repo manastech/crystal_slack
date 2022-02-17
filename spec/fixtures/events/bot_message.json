@@ -1,0 +1,47 @@
+{
+    "type": "event_callback",
+    "event": {
+        "ts": "1645083103.201509",
+        "team": "T017GL5AV5E",
+        "text": "But what about my friend the bot",
+        "type": "message",
+        "user": "U016SQZLFEE",
+        "blocks": [
+            {
+                "type": "rich_text",
+                "block_id": "xXkB",
+                "elements": [
+                    {
+                        "type": "rich_text_section",
+                        "elements": [
+                            {
+                                "text": "But what about my friend the bot",
+                                "type": "text"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "channel": "D031PUW2YG5",
+        "event_ts": "1645083103.201509",
+        "channel_type": "im",
+        "client_msg_id": "a7de60bd-f852-4e62-bd25-26427e7c3835"
+    },
+    "token": "E6FV7uzAaZoqjhbU56ZKNnIk",
+    "team_id": "T017GL5AV5E",
+    "event_id": "Ev033DTJA37F",
+    "api_app_id": "A031L6N0Q3G",
+    "event_time": 1645083103,
+    "event_context": "4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMDE3R0w1QVY1RSIsImFpZCI6IkEwMzFMNk4wUTNHIiwiY2lkIjoiRDAzMVBVVzJZRzUifQ",
+    "authorizations": [
+        {
+            "is_bot": true,
+            "team_id": "T017GL5AV5E",
+            "user_id": "U0325FAKTL1",
+            "enterprise_id": null,
+            "is_enterprise_install": false
+        }
+    ],
+    "is_ext_shared_channel": false
+}

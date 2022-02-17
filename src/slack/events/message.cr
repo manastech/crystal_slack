@@ -8,6 +8,8 @@ class Slack::Events::Message < Slack::Event
 
   property attachments : Array(Attachment)?,
     blocks : Array(JSON::Any),
+    channel_type : String?,
     team : String?,
-    text : String
+    text : String,
+    ts : String?
 end

@@ -6,7 +6,6 @@ class Slack::Events::Message::BotAdd < Slack::Event
     event_ts : String,
     subtype : String,
     text : String,
-    type : String,
     user : String,
     ts : String
 end
