@@ -10,6 +10,8 @@ class Slack::Events::Message < Slack::Event
     blocks : Array(JSON::Any),
     channel_type : String?,
     team : String?,
-    text : String,
-    ts : String?
+    text : String
+
+  @[JSON::Field(converter: Slack::DecimalTimeStampConverter)]
+  property ts : Time
 end

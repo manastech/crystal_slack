@@ -3,9 +3,13 @@ class Slack::Events::Message::BotAdd < Slack::Event
     bot_link : String,
     channel : String,
     channel_type : String,
-    event_ts : String,
     subtype : String,
     text : String,
-    user : String,
-    ts : String
+    user : String
+
+  @[JSON::Field(converter: Slack::DecimalTimeStampConverter)]
+  property event_ts : Time
+
+  @[JSON::Field(converter: Slack::DecimalTimeStampConverter)]
+  property ts : Time
 end

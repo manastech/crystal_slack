@@ -1,9 +1,13 @@
 class Slack::Events::Message::MessageDeleted < Slack::Event
   property channel : String,
     channel_type : String,
-    event_ts : String,
     hidden : Bool,
     previous_message : Message,
-    subtype : String,
-    ts : String
+    subtype : String
+
+  @[JSON::Field(converter: Slack::DecimalTimeStampConverter)]
+  property event_ts : Time
+
+  @[JSON::Field(converter: Slack::DecimalTimeStampConverter)]
+  property ts : Time
 end
