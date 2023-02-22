@@ -41,6 +41,15 @@ api.post_message(message)
 More complex messages are supported. Please check the Message class.
 You can also get the users and channels given an token.
 
+
+If you wish to configure the upstream slack host, you may do so
+
+```crystal
+require "slack"
+
+Slack::API.slack_host = "enterprise.slack.com" # Defaults to "slack.com"
+```
+
 ## Todo
 
 Lots of API methods are missing!
