@@ -1,5 +1,18 @@
+require "oauth2"
+
 class Slack::API
+  @token : String
+  @oauth_session : OAuth2::Session?
+  @mutex = Mutex.new
+
+  class_property slack_host : String = "slack.com"
+
   def initialize(@token : String)
+    @client = HTTP::Client.new self.class.slack_host, tls: true
+  end
+
+  def initialize(@oauth_session : OAuth2::Session)
+    @token = ""
     @client = HTTP::Client.new "slack.com", tls: true
   end
 
@@ -21,7 +34,8 @@ class Slack::API
 
   def post_message(message : Message)
     params = HTTP::Params.build do |form|
-      form.add "token", @token
+      form.add "token", @token unless @token.empty?
+
       message.add_params(form)
     end
 
@@ -30,7 +44,7 @@ class Slack::API
 
   def update_message(message : Message, timestamp : String)
     encoded_params = HTTP::Params.build do |form|
-      form.add "token", @token
+      form.add "token", @token unless @token.empty?
       form.add "ts", timestamp
       message.add_params(form)
     end
@@ -46,7 +60,8 @@ class Slack::API
       end
     end
 
-    response = @client.get "#{url}?#{encoded_params}"
+    response = @mutex.synchronize { @client.exec(authenticated_request("GET", "#{url}?#{encoded_params}")) }
+
     handle(response) do
       parse_response_object response.body, field, klass
     end
@@ -75,9 +90,20 @@ class Slack::API
   private def post_json(url)
     # the post message API doesn't support json paylods
     # we send each field as a separate URL param
-    response = @client.post url
+    response = @mutex.synchronize { @client.exec(authenticated_request("POST", url)) }
+
     handle(response) do
       parse_post_response(response.body)
+    end
+  end
+
+  private def authenticated_request(method, resource)
+    HTTP::Request.new(method, resource, headers: HTTP::Headers.new).tap do |request|
+      if oauth_session = @oauth_session
+        oauth_session.access_token.authenticate(request, @client.tls?)
+      else
+        request.headers["Authorization"] = "Bearer #{@token}"
+      end
     end
   end
 
