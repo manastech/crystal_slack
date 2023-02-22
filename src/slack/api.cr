@@ -34,8 +34,6 @@ class Slack::API
 
   def post_message(message : Message)
     params = HTTP::Params.build do |form|
-      form.add "token", @token unless @token.empty?
-
       message.add_params(form)
     end
 
@@ -44,7 +42,6 @@ class Slack::API
 
   def update_message(message : Message, timestamp : String)
     encoded_params = HTTP::Params.build do |form|
-      form.add "token", @token unless @token.empty?
       form.add "ts", timestamp
       message.add_params(form)
     end
@@ -54,7 +51,6 @@ class Slack::API
 
   private def get_json(url, field, klass, params = {} of String => String)
     encoded_params = HTTP::Params.build do |form|
-      form.add "token", @token
       params.each do |(k, v)|
         form.add k, v
       end
