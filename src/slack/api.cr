@@ -7,14 +7,13 @@ class Slack::API
 
   class_property slack_host : String = "slack.com"
 
-  # NOTE: deprecated
   def initialize(@token : String)
     @client = HTTP::Client.new self.class.slack_host, tls: true
   end
 
   def initialize(@oauth_session : OAuth2::Session)
     @client = HTTP::Client.new self.class.slack_host, tls: true
-    @oauth_session.access_token.authenticate(@client)
+    oauth_session.access_token.authenticate(@client)
   end
 
   def users

@@ -1,6 +1,24 @@
 require "./spec_helper"
 
 describe Slack::API do
+  describe "oauth session" do
+    it "authenticates" do
+      oauth_client = OAuth2::Client.new("slack.com", "key", "secret")
+      oauth_token = OAuth2::AccessToken::Bearer.new("oauth2_token", expires_in: 1.hour.from_now.to_unix.to_i64)
+      oauth_session = OAuth2::Session.new(oauth_client, oauth_token, expires_at: 1.hour.from_now) {}
+
+      stub = WebMock
+        .stub(:get, "https://slack.com/api/users.list?")
+        .with(headers: { "Authorization" => "Bearer oauth2_token" })
+        .to_return(body: { "ok" => true, "members" => [] of Slack::API::User }.to_json)
+
+      api = Slack::API.new(oauth_session)
+      api.users
+
+      stub.calls.should eq(1)
+    end
+  end
+
   it "gets users" do
     api = Slack::API.new "some_token"
 
