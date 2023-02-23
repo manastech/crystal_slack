@@ -58,7 +58,7 @@ class Slack::API
     end
 
     response = @mutex.synchronize do
-      @client.get("GET", "#{url}?#{encoded_params}", headers: authenticated_headers)
+      @client.get("#{url}?#{encoded_params}", headers: authenticated_headers)
     end
 
     handle(response) do
