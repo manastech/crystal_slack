@@ -1,19 +1,20 @@
 require "oauth2"
 
 class Slack::API
-  @token : String
+  @token : String?
   @oauth_session : OAuth2::Session?
   @mutex = Mutex.new
 
   class_property slack_host : String = "slack.com"
 
+  # NOTE: deprecated
   def initialize(@token : String)
     @client = HTTP::Client.new self.class.slack_host, tls: true
   end
 
   def initialize(@oauth_session : OAuth2::Session)
-    @token = ""
-    @client = HTTP::Client.new "slack.com", tls: true
+    @client = HTTP::Client.new self.class.slack_host, tls: true
+    @oauth_session.access_token.authenticate(@client)
   end
 
   def users
@@ -56,7 +57,9 @@ class Slack::API
       end
     end
 
-    response = @mutex.synchronize { @client.exec(authenticated_request("GET", "#{url}?#{encoded_params}")) }
+    response = @mutex.synchronize do
+      @client.get("GET", "#{url}?#{encoded_params}", headers: authenticated_headers)
+    end
 
     handle(response) do
       parse_response_object response.body, field, klass
@@ -86,20 +89,18 @@ class Slack::API
   private def post_json(url)
     # the post message API doesn't support json paylods
     # we send each field as a separate URL param
-    response = @mutex.synchronize { @client.exec(authenticated_request("POST", url)) }
+    response = @mutex.synchronize do
+      @client.post(url, headers: authenticated_headers)
+    end
 
     handle(response) do
       parse_post_response(response.body)
     end
   end
 
-  private def authenticated_request(method, resource)
-    HTTP::Request.new(method, resource, headers: HTTP::Headers.new).tap do |request|
-      if oauth_session = @oauth_session
-        oauth_session.access_token.authenticate(request, @client.tls?)
-      else
-        request.headers["Authorization"] = "Bearer #{@token}"
-      end
+  private def authenticated_headers
+    if token = @token
+      HTTP::Headers{"Authorization" => "Bearer #{token}"}
     end
   end
 
