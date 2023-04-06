@@ -1,6 +1,19 @@
+require "oauth2"
+
 class Slack::API
+  @token : String?
+  @oauth_session : OAuth2::Session?
+  @mutex = Mutex.new
+
+  class_property slack_host : String = "slack.com"
+
   def initialize(@token : String)
-    @client = HTTP::Client.new "slack.com", tls: true
+    @client = HTTP::Client.new self.class.slack_host, tls: true
+  end
+
+  def initialize(@oauth_session : OAuth2::Session)
+    @client = HTTP::Client.new self.class.slack_host, tls: true
+    oauth_session.access_token.authenticate(@client)
   end
 
   def users
@@ -21,7 +34,6 @@ class Slack::API
 
   def post_message(message : Message)
     params = HTTP::Params.build do |form|
-      form.add "token", @token
       message.add_params(form)
     end
 
@@ -30,7 +42,6 @@ class Slack::API
 
   def update_message(message : Message, timestamp : String)
     encoded_params = HTTP::Params.build do |form|
-      form.add "token", @token
       form.add "ts", timestamp
       message.add_params(form)
     end
@@ -40,13 +51,15 @@ class Slack::API
 
   private def get_json(url, field, klass, params = {} of String => String)
     encoded_params = HTTP::Params.build do |form|
-      form.add "token", @token
       params.each do |(k, v)|
         form.add k, v
       end
     end
 
-    response = @client.get "#{url}?#{encoded_params}"
+    response = @mutex.synchronize do
+      @client.get("#{url}?#{encoded_params}", headers: authenticated_headers)
+    end
+
     handle(response) do
       parse_response_object response.body, field, klass
     end
@@ -75,9 +88,18 @@ class Slack::API
   private def post_json(url)
     # the post message API doesn't support json paylods
     # we send each field as a separate URL param
-    response = @client.post url
+    response = @mutex.synchronize do
+      @client.post(url, headers: authenticated_headers)
+    end
+
     handle(response) do
       parse_post_response(response.body)
+    end
+  end
+
+  private def authenticated_headers
+    if token = @token
+      HTTP::Headers{"Authorization" => "Bearer #{token}"}
     end
   end
 
