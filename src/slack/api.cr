@@ -13,7 +13,6 @@ class Slack::API
 
   def initialize(@oauth_session : OAuth2::Session)
     @client = HTTP::Client.new self.class.slack_host, tls: true
-    oauth_session.access_token.authenticate(@client)
   end
 
   def users
@@ -57,6 +56,7 @@ class Slack::API
     end
 
     response = @mutex.synchronize do
+      @oauth_session.try(&.authenticate(@client))
       @client.get("#{url}?#{encoded_params}", headers: authenticated_headers)
     end
 
@@ -89,6 +89,7 @@ class Slack::API
     # the post message API doesn't support json paylods
     # we send each field as a separate URL param
     response = @mutex.synchronize do
+      @oauth_session.try(&.authenticate(@client))
       @client.post(url, headers: authenticated_headers)
     end
 
