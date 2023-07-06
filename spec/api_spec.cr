@@ -6,16 +6,41 @@ describe Slack::API do
       oauth_client = OAuth2::Client.new("slack.com", "key", "secret")
       oauth_token = OAuth2::AccessToken::Bearer.new("oauth2_token", expires_in: 1.hour.from_now.to_unix.to_i64)
       oauth_session = OAuth2::Session.new(oauth_client, oauth_token, expires_at: 1.hour.from_now) {}
+      api = Slack::API.new(oauth_session)
 
-      stub = WebMock
+      stub_query = WebMock
         .stub(:get, "https://slack.com/api/users.list?")
         .with(headers: { "Authorization" => "Bearer oauth2_token" })
         .to_return(body: { "ok" => true, "members" => [] of Slack::API::User }.to_json)
 
-      api = Slack::API.new(oauth_session)
       api.users
+      stub_query.calls.should eq(1)
+    end
 
-      stub.calls.should eq(1)
+    it "refreshes token" do
+      oauth_client = OAuth2::Client.new("slack.com", "key", "secret")
+      oauth_token = OAuth2::AccessToken::Bearer.new("oauth2_token", expires_in: 1.hour.ago.to_unix.to_i64, refresh_token: "abcdefgh")
+      oauth_session = OAuth2::Session.new(oauth_client, oauth_token, expires_at: 1.hour.ago) {}
+      api = Slack::API.new(oauth_session)
+
+      stub_refresh = WebMock
+        .stub(:post, "https://slack.com/oauth2/token")
+        .with(body: "grant_type=refresh_token&refresh_token=abcdefgh")
+        .to_return(body: {
+          "token_type" => "bearer",
+          "access_token" => "1234567890",
+          "refresh_token" => "poiuytreza",
+          "expires_in" => 43200,
+        }.to_json)
+
+      stub_query = WebMock
+        .stub(:get, "https://slack.com/api/users.list?")
+        .with(headers: { "Authorization" => "Bearer 1234567890" })
+        .to_return(body: { "ok" => true, "members" => [] of Slack::API::User }.to_json)
+
+      api.users
+      stub_refresh.calls.should eq(1)
+      stub_query.calls.should eq(1)
     end
   end
 
